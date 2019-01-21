@@ -29,6 +29,8 @@ func main() {
 		return
 	}
 
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", browse)
 
 	//provide by Heroku
