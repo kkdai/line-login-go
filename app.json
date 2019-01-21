@@ -13,18 +13,22 @@
   ],
   "env": {
     "LINECORP_PLATFORM_CHANNEL_CHANNELID": {
-      "description": "LINE Login - Channel secret",
+      "description": "LINE Login - Channel ID",
       "required": true
     },
     "LINECORP_PLATFORM_CHANNEL_CHANNELSECRET": {
       "description": "LINE Login - Channel secret",
       "required": true
     },
-    "LINECORP_PLATFORM_CHANNEL_CHANNELTOKEN": {
-      "description": "Channel token",
+    "LINECORP_PLATFORM_CHATBOT_CHANNELTOKEN": {
+      "description": "LINE Chatbot - token",
       "required": true
     },
-    "LINECORP_PLATFORM_CHANNEL_SERVERURL": {
+    "LINECORP_PLATFORM_CHATBOT_CHANNELSECRET": {
+      "description": "LINE Chatbot - secret",
+      "required": true
+    },
+    "LINECORP_PLATFORM_SERVERURL": {
       "description": "Server URL",
       "required": true
     }
