@@ -24,4 +24,5 @@ func gotoauthpage(w http.ResponseWriter, r *http.Request) {
 	redirectURL := fmt.Sprintf("%s/auth", serverURL)
 	targetURL := GetWebLoinURL(clientID, redirectURL, state, scope, nounce)
 	log.Println("url=", targetURL)
+	http.Redirect(w, r, targetURL, http.StatusSeeOther)
 }
