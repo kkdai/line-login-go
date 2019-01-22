@@ -38,7 +38,7 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	log.Println("code:", code, " state:", state, "friend status:", friendshipStatusChanged)
 
 	//Request for access token
-	token, err := RequestLoginToken(code, serverURL, channelID, channelSecret)
+	token, err := RequestLoginToken(code, fmt.Sprintf("%s/auth", serverURL), channelID, channelSecret)
 	if err != nil {
 		log.Println("Template err:", err)
 		return
