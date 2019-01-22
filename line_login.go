@@ -26,3 +26,29 @@ func gotoauthpage(w http.ResponseWriter, r *http.Request) {
 	log.Println("url=", targetURL)
 	http.Redirect(w, r, targetURL, http.StatusSeeOther)
 }
+
+func auth(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		log.Printf("ParseForm() err: %v\n", err)
+		return
+	}
+	code := r.FormValue("code")
+	state := r.FormValue("state")
+	friendshipStatusChanged := r.FormValue("friendship_status_changed")
+	log.Println("code:", code, " state:", state, "friend status:", friendshipStatusChanged)
+
+	//Request for access token
+	token, err := RequestLoginToken(code, serverURL, channelID, channelSecret)
+	if err != nil {
+		log.Println("Template err:", err)
+		return
+	}
+
+	log.Println("token:=", token)
+
+	//verify access token
+	tmpl := template.Must(template.ParseFiles("login_success.tmpl"))
+	if err := tmpl.Execute(w, token); err != nil {
+		log.Println("Template err:", err)
+	}
+}

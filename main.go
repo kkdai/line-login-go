@@ -34,6 +34,7 @@ func main() {
 
 	http.HandleFunc("/", browse)
 	http.HandleFunc("/gotoauthpage", gotoauthpage)
+	http.HandleFunc("/auth", auth)
 
 	//provide by Heroku
 	port := os.Getenv("PORT")
