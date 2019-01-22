@@ -17,7 +17,7 @@ func browse(w http.ResponseWriter, r *http.Request) {
 }
 
 func gotoauthpage(w http.ResponseWriter, r *http.Request) {
-	scope := "profile%20openid%20email" //profile | openid | email
+	scope := "profile openid" //profile | openid | email
 	state := GenerateNounce()
 	clientID := channelID
 	nounce := GenerateNounce()
