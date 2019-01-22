@@ -82,6 +82,7 @@ func RequestLoginToken(code, redirectURL, clientID, clientSecret string) (*Token
 		log.Println("er:", err)
 		return nil, err
 	}
+	log.Println("body:", string(retBody))
 	retToken := TokenResponse{}
 	if err := json.Unmarshal(retBody, &retToken); err != nil {
 		return nil, err
