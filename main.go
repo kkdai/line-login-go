@@ -31,7 +31,9 @@ func main() {
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	http.HandleFunc("/", browse)
+	http.HandleFunc("/gotoauthpage", gotoauthpage)
 
 	//provide by Heroku
 	port := os.Getenv("PORT")
