@@ -17,6 +17,15 @@ func browse(w http.ResponseWriter, r *http.Request) {
 }
 
 func gotoauthpage(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		log.Printf("ParseForm() err: %v\n", err)
+		return
+	}
+	chatbot := r.FormValue("chatbot")
+	if chatbot != "" {
+
+	}
+
 	scope := "profile openid" //profile | openid | email
 	state := GenerateNounce()
 	clientID := channelID
