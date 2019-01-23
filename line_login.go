@@ -45,11 +45,15 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Decode IDToken
-	DecodeIDToken(IDToken.IDToken)
+	payload, err := DecodeIDToken(IDToken.IDToken, channelID, "")
+	if err != nil {
+		log.Println("DecodeIDToken err:", err)
+		return
+	}
 
 	//verify access token
 	tmpl := template.Must(template.ParseFiles("login_success.tmpl"))
-	if err := tmpl.Execute(w, IDToken); err != nil {
+	if err := tmpl.Execute(w, payload); err != nil {
 		log.Println("Template err:", err)
 	}
 }
