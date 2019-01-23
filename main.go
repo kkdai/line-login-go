@@ -32,9 +32,13 @@ func main() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
+	//For LINE login
 	http.HandleFunc("/", browse)
 	http.HandleFunc("/gotoauthpage", gotoauthpage)
 	http.HandleFunc("/auth", auth)
+
+	//For linked chatbot
+	http.HandleFunc("/callback", callbackHandler)
 
 	//provide by Heroku
 	port := os.Getenv("PORT")
