@@ -150,7 +150,7 @@ func base64Decode(payload string) string {
 	log.Println("rem of payload=", rem)
 	if rem > 0 {
 		i := 4 - rem
-		for ; i >= 0; i-- {
+		for ; i > 0; i-- {
 			payload = payload + "="
 		}
 	}
