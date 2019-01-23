@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	b64 "encoding/base64"
+
 	"github.com/gbrlsnchs/jwt"
 )
 
@@ -54,6 +56,12 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Println("jwt.Parse succeess:", string(payload), string(sig))
+	bPayload, err := b64.StdEncoding.DecodeString(string(payload))
+	if err != nil {
+		log.Println("base64 decode err:", err)
+		return
+	}
+	log.Println("base64 decode succeess:", string(bPayload))
 
 	//verify access token
 	tmpl := template.Must(template.ParseFiles("login_success.tmpl"))
