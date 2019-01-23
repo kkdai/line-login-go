@@ -5,10 +5,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-
-	b64 "encoding/base64"
-
-	"github.com/gbrlsnchs/jwt"
 )
 
 const lineLoginURL string = "https://access.line.me/oauth2/v2.1/authorize?response_type=code"
@@ -48,31 +44,8 @@ func auth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	payload, sig, err := jwt.Parse(IDToken.IDToken)
-	if err != nil {
-		log.Println("jwt.Parse err:", err, payload, sig)
-		return
-
-	}
-
-	log.Println("jwt.Parse succeess:", string(payload), string(sig))
-
-	rem := len(payload) % 4
-	payloadStr := string(payload)
-	log.Println("side of payload=", rem)
-	if rem > 0 {
-		i := 4 - rem
-		for ; i >= 0; i-- {
-			payloadStr = payloadStr + "="
-		}
-	}
-
-	bPayload, err := b64.StdEncoding.DecodeString(payloadStr)
-	if err != nil {
-		log.Println("base64 decode err:", err)
-		return
-	}
-	log.Println("base64 decode succeess:", string(bPayload))
+	//Decode IDToken
+	DecodeIDToken(IDToken.IDToken)
 
 	//verify access token
 	tmpl := template.Must(template.ParseFiles("login_success.tmpl"))

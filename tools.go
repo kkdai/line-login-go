@@ -124,3 +124,33 @@ func VerifyToken(code, redirectURL, clientID, clientSecret string) (*TokenRespon
 
 	return &retToken, nil
 }
+
+func DecodeIDToken(idToken string) {
+	splitToken := strings.Split(idToken, ".")
+	if len(splitToken) < 3 {
+		log.Println("Error: idToken size is wrong, size=", len(splitToken))
+		return
+	}
+	header, payload, signature := splitToken[0], splitToken[1], splitToken[2]
+	log.Println("result:", header, payload, signature)
+
+	payload = base64Decode(payload)
+	bPayload, err := b64.StdEncoding.DecodeString(payload)
+	if err != nil {
+		log.Println("base64 decode err:", err)
+		return
+	}
+	log.Println("base64 decode succeess:", string(bPayload))
+}
+
+func base64Decode(payload string) string {
+	rem := len(payload) % 4
+	log.Println("side of payload=", rem)
+	if rem > 0 {
+		i := 4 - rem
+		for ; i >= 0; i-- {
+			payload = payload + "="
+		}
+	}
+	return payload
+}
