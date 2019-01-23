@@ -31,7 +31,6 @@ func gotoauthpage(w http.ResponseWriter, r *http.Request) {
 	nounce = GenerateNounce()
 	redirectURL := fmt.Sprintf("%s/auth", serverURL)
 	targetURL := GetWebLoinURL(clientID, redirectURL, state, scope, nounce, chatbot)
-	log.Println("url=", targetURL)
 	http.Redirect(w, r, targetURL, http.StatusSeeOther)
 }
 
