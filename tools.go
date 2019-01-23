@@ -75,11 +75,15 @@ func RequestLoginToken(code, redirectURL, clientID, clientSecret string) (*Token
 		// handle err
 		return nil, err
 	}
+	if resp.StatusCode != 200 {
+		log.Println("http error:", resp.StatusCode)
+		return nil, err
+	}
 	defer resp.Body.Close()
 
 	retBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Println("er:", err)
+		log.Println("err:", err)
 		return nil, err
 	}
 	log.Println("body:", string(retBody))
