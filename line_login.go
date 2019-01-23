@@ -1,10 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+
+	"github.com/gbrlsnchs/jwt"
 )
 
 const lineLoginURL string = "https://access.line.me/oauth2/v2.1/authorize?response_type=code"
@@ -38,17 +41,26 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	log.Println("code:", code, " state:", state, "friend status:", friendshipStatusChanged)
 
 	//Request for access token
-	token, err := RequestLoginToken(code, fmt.Sprintf("%s/auth", serverURL), channelID, channelSecret)
+	IDToken, err := RequestLoginToken(code, fmt.Sprintf("%s/auth", serverURL), channelID, channelSecret)
 	if err != nil {
-		log.Println("Template err:", err)
+		log.Println("RequestLoginToken err:", err)
 		return
 	}
 
-	log.Println("token:=", token)
+	byteIDToken, _ := json.Marshal(IDToken)
+	log.Println("ID_Token:=", IDToken)
+	payload, sig, err := jwt.Parse(string(byteIDToken))
+	if err != nil {
+		log.Println("jwt.Parse err:", err, payload, sig)
+		return
+
+	}
+
+	log.Println("jwt.Parse succeess:", payload, sig)
 
 	//verify access token
 	tmpl := template.Must(template.ParseFiles("login_success.tmpl"))
-	if err := tmpl.Execute(w, token); err != nil {
+	if err := tmpl.Execute(w, IDToken); err != nil {
 		log.Println("Template err:", err)
 	}
 }
