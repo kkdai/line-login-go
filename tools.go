@@ -63,6 +63,7 @@ func GetWebLoinURL(clientID, redirectURL, state, scope, nounce string) string {
 	q.Add("nounce", nounce)
 	q.Add("redirect_uri", redirectURL)
 	q.Add("bot_prompt", "normal")
+	q.Add("prompt", "consent")
 	req.URL.RawQuery = q.Encode()
 	log.Println(req.URL.String())
 	return req.URL.String()
