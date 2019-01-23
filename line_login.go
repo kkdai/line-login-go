@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -47,9 +46,7 @@ func auth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	byteIDToken, _ := json.Marshal(IDToken)
-	log.Println("ID_Token:=", IDToken)
-	payload, sig, err := jwt.Parse(string(byteIDToken))
+	payload, sig, err := jwt.Parse(IDToken.IDToken)
 	if err != nil {
 		log.Println("jwt.Parse err:", err, payload, sig)
 		return
