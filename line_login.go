@@ -56,7 +56,7 @@ func auth(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	log.Println("jwt.Parse succeess:", payload, sig)
+	log.Println("jwt.Parse succeess:", string(payload), string(sig))
 
 	//verify access token
 	tmpl := template.Must(template.ParseFiles("login_success.tmpl"))
