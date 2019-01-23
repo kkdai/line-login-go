@@ -7,6 +7,8 @@ import (
 	"net/http"
 )
 
+var nounce string
+
 const lineLoginURL string = "https://access.line.me/oauth2/v2.1/authorize?response_type=code"
 
 func browse(w http.ResponseWriter, r *http.Request) {
@@ -22,16 +24,13 @@ func gotoauthpage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	chatbot := r.FormValue("chatbot")
-	if chatbot != "" {
-
-	}
 
 	scope := "profile openid" //profile | openid | email
 	state := GenerateNounce()
 	clientID := channelID
-	nounce := GenerateNounce()
+	nounce = GenerateNounce()
 	redirectURL := fmt.Sprintf("%s/auth", serverURL)
-	targetURL := GetWebLoinURL(clientID, redirectURL, state, scope, nounce)
+	targetURL := GetWebLoinURL(clientID, redirectURL, state, scope, nounce, chatbot)
 	log.Println("url=", targetURL)
 	http.Redirect(w, r, targetURL, http.StatusSeeOther)
 }

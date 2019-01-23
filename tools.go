@@ -49,7 +49,7 @@ func RandStringRunes(n int) string {
 }
 
 //GetWebLoinURL - LINE LOGIN 2.1 get LINE Login URL
-func GetWebLoinURL(clientID, redirectURL, state, scope, nounce string) string {
+func GetWebLoinURL(clientID, redirectURL, state, scope, nounce, chatbotPrompt string) string {
 	req, err := http.NewRequest("GET", "https://access.line.me/oauth2/v2.1/authorize", nil)
 	if err != nil {
 		log.Print(err)
@@ -62,7 +62,9 @@ func GetWebLoinURL(clientID, redirectURL, state, scope, nounce string) string {
 	q.Add("scope", scope)
 	q.Add("nounce", nounce)
 	q.Add("redirect_uri", redirectURL)
-	q.Add("bot_prompt", "normal")
+	if len(chatbotPrompt) > 0 {
+		q.Add("bot_prompt", chatbotPrompt)
+	}
 	q.Add("prompt", "consent")
 	req.URL.RawQuery = q.Encode()
 	log.Println(req.URL.String())
