@@ -134,7 +134,9 @@ func DecodeIDToken(idToken string) {
 	header, payload, signature := splitToken[0], splitToken[1], splitToken[2]
 	log.Println("result:", header, payload, signature)
 
+	log.Println("side of payload=", len(payload))
 	payload = base64Decode(payload)
+	log.Println("side of payload=", len(payload), payload)
 	bPayload, err := b64.StdEncoding.DecodeString(payload)
 	if err != nil {
 		log.Println("base64 decode err:", err)
@@ -145,7 +147,7 @@ func DecodeIDToken(idToken string) {
 
 func base64Decode(payload string) string {
 	rem := len(payload) % 4
-	log.Println("side of payload=", rem)
+	log.Println("rem of payload=", rem)
 	if rem > 0 {
 		i := 4 - rem
 		for ; i >= 0; i-- {
