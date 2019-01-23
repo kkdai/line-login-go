@@ -56,7 +56,18 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Println("jwt.Parse succeess:", string(payload), string(sig))
-	bPayload, err := b64.StdEncoding.DecodeString(string(payload))
+
+	rem := len(payload) % 4
+	payloadStr := string(payload)
+	log.Println("side of payload=", rem)
+	if rem > 0 {
+		i := 4 - rem
+		for ; i >= 0; i-- {
+			payloadStr = payloadStr + "="
+		}
+	}
+
+	bPayload, err := b64.StdEncoding.DecodeString(payloadStr)
 	if err != nil {
 		log.Println("base64 decode err:", err)
 		return
