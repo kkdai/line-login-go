@@ -106,7 +106,7 @@ func RequestLoginToken(code, redirectURL, clientID, clientSecret string) (*Token
 	return &retToken, nil
 }
 
-func DecodeIDToken(idToken string, channelID, nounce string) (*Payload, error) {
+func DecodeIDToken(idToken string, channelID string) (*Payload, error) {
 	splitToken := strings.Split(idToken, ".")
 	if len(splitToken) < 3 {
 		log.Println("Error: idToken size is wrong, size=", len(splitToken))
@@ -132,14 +132,12 @@ func DecodeIDToken(idToken string, channelID, nounce string) (*Payload, error) {
 
 	// payload verification
 	if strings.Compare(retPayload.Iss, "https://access.line.me") != 0 {
-		return nil, fmt.Errorf("Payload verification wrong.")
+		return nil, fmt.Errorf("Payload verification wrong. Wrong issue organization. \n")
 	}
 	if strings.Compare(retPayload.Aud, channelID) != 0 {
-		return nil, fmt.Errorf("Payload verification wrong.")
+		return nil, fmt.Errorf("Payload verification wrong. Wrong audience. \n")
 	}
-	if strings.Compare(retPayload.Nonce, nounce) != 0 {
-		return nil, fmt.Errorf("Payload verification wrong.")
-	}
+
 	return retPayload, nil
 }
 

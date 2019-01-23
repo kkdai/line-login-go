@@ -45,7 +45,7 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Decode IDToken
-	payload, err := DecodeIDToken(IDToken.IDToken, channelID, "")
+	payload, err := DecodeIDToken(IDToken.IDToken, channelID)
 	if err != nil {
 		log.Println("DecodeIDToken err:", err)
 		return
