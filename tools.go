@@ -40,7 +40,7 @@ type Payload struct {
 
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
-func RandStringRunes(n int) string {
+func randStringRunes(n int) string {
 	b := make([]rune, n)
 	for i := range b {
 		b[i] = letterRunes[rand.Intn(len(letterRunes))]
@@ -72,7 +72,7 @@ func GetWebLoinURL(clientID, redirectURL, state, scope, nounce, chatbotPrompt st
 }
 
 func GenerateNounce() string {
-	return b64.StdEncoding.EncodeToString([]byte(RandStringRunes(8)))
+	return b64.StdEncoding.EncodeToString([]byte(randStringRunes(8)))
 }
 
 func RequestLoginToken(code, redirectURL, clientID, clientSecret string) (*TokenResponse, error) {
