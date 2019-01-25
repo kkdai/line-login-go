@@ -25,7 +25,7 @@ func gotoauthpage(w http.ResponseWriter, r *http.Request) {
 	}
 	chatbot := r.FormValue("chatbot")
 
-	scope := "profile openid" //profile | openid | email
+	scope := "profile openid email" //profile | openid | email
 	state := GenerateNounce()
 	clientID := channelID
 	nounce = GenerateNounce()
