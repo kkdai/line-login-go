@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	social "github.com/kkdai/line-social-sdk-go"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -17,6 +18,7 @@ var channelID, channelSecret string
 //LINE MessageAPI related configuration
 var serverURL string
 var botToken, botSecret string
+var socialClient *social.Client
 
 func main() {
 	var err error
@@ -26,6 +28,11 @@ func main() {
 
 	if bot, err = linebot.New(os.Getenv("LINECORP_PLATFORM_CHATBOT_CHANNELSECRET"), os.Getenv("LINECORP_PLATFORM_CHATBOT_CHANNELTOKEN")); err != nil {
 		log.Println("Bot:", bot, " err:", err)
+		return
+	}
+
+	if socialClient, err = social.New(channelID, channelSecret); err != nil {
+		log.Println("Social SDK:", socialClient, " err:", err)
 		return
 	}
 

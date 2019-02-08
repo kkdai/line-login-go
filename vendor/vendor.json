@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "aYEHTv87TMrTR6+4cxbdG3zQZyQ=",
+			"path": "github.com/kkdai/line-social-sdk-go",
+			"revision": "3649d84653dc210b11775ecd7442d37b1038539d",
+			"revisionTime": "2019-02-08T18:35:32Z"
+		},
+		{
 			"checksumSHA1": "+AFpii7IfZSiqfUIddwXuniOuoo=",
 			"path": "github.com/line/line-bot-sdk-go/linebot",
 			"revision": "f1e37ce560f186e87cc2c4ec0ffd9d7da814fccc",

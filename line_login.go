@@ -29,10 +29,9 @@ func gotoauthpage(w http.ResponseWriter, r *http.Request) {
 
 	scope := "profile openid" //profile | openid | email
 	state = GenerateNounce()
-	clientID := channelID
 	nounce = GenerateNounce()
 	redirectURL := fmt.Sprintf("%s/auth", serverURL)
-	targetURL := GetWebLoinURL(clientID, redirectURL, state, scope, nounce, chatbot)
+	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, nounce, chatbot)
 	http.Redirect(w, r, targetURL, http.StatusSeeOther)
 }
 
