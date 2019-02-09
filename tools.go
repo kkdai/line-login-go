@@ -52,8 +52,6 @@ func GenerateNounce() string {
 }
 
 func RequestLoginToken(code, redirectURL, clientID, clientSecret string) (*TokenResponse, error) {
-	// qURL := url.QueryEscape(redirectURL)
-
 	data := url.Values{}
 	data.Set("grant_type", "authorization_code")
 	data.Set("code", code)
@@ -61,10 +59,6 @@ func RequestLoginToken(code, redirectURL, clientID, clientSecret string) (*Token
 	data.Set("client_id", clientID)
 	data.Set("client_secret", clientSecret)
 	req, err := http.NewRequest("POST", "https://api.line.me/oauth2/v2.1/token", strings.NewReader(data.Encode()))
-
-	// body := strings.NewReader(fmt.Sprintf("grant_type=authorization_code&code=%s&redirect_uri=%s&client_id=%s&client_secret=%s", code, qURL, clientID, clientSecret))
-	// req, err := http.NewRequest("POST", "https://api.line.me/oauth2/v2.1/token", body)
-
 	if err != nil {
 		// handle err
 		return nil, err
