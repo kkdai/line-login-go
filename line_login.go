@@ -51,7 +51,6 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	log.Println("code:", code, " state:", state, "friend status:", friendshipStatusChanged)
 
 	//Request for access token
-	socialClient.
 	// IDToken, err := socialClient.GetAccessToken(fmt.Sprintf("%s/auth", serverURL), code).Do()
 	IDToken, err := RequestLoginToken(code, fmt.Sprintf("%s/auth", serverURL), channelID, channelSecret)
 	if err != nil {
