@@ -52,7 +52,6 @@ func auth(w http.ResponseWriter, r *http.Request) {
 
 	//Request for access token
 	IDToken, err := socialClient.GetAccessToken(fmt.Sprintf("%s/auth", serverURL), code).Do()
-	// IDToken, err := RequestLoginToken(code, fmt.Sprintf("%s/auth", serverURL), channelID, channelSecret)
 	if err != nil {
 		log.Println("RequestLoginToken err:", err)
 		return
