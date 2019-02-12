@@ -51,14 +51,14 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	log.Println("code:", code, " state:", state, "friend status:", friendshipStatusChanged)
 
 	//Request for access token
-	IDToken, err := socialClient.GetAccessToken(fmt.Sprintf("%s/auth", serverURL), code).Do()
+	token, err := socialClient.GetAccessToken(fmt.Sprintf("%s/auth", serverURL), code).Do()
 	if err != nil {
 		log.Println("RequestLoginToken err:", err)
 		return
 	}
 
-	//Decode IDToken
-	payload, err := DecodeIDToken(IDToken.IDToken, channelID)
+	//Decode token.IDToken to payload
+	payload, err := token.DecodePayload(channelID)
 	if err != nil {
 		log.Println("DecodeIDToken err:", err)
 		return
