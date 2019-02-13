@@ -77,6 +77,7 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	var payload *social.Payload
 	if len(token.IDToken) == 0 {
 		// User don't request openID, use access token to get usere profile
+		log.Println(" token:", token, " AccessToken:", token.AccessToken)
 		res, err := socialClient.GetUserProfile(token.AccessToken).Do()
 		if err != nil {
 			log.Println("GetUserProfile err:", err)
