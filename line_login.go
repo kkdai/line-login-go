@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"strings"
+
+	social "github.com/kkdai/line-social-sdk-go"
 )
 
 var nounce string
@@ -21,6 +23,21 @@ func browse(w http.ResponseWriter, r *http.Request) {
 }
 
 func gotoauthpage(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		log.Printf("ParseForm() err: %v\n", err)
+		return
+	}
+	chatbot := r.FormValue("chatbot")
+
+	scope := "profile" //profile | openid | email
+	state = GenerateNounce()
+	nounce = GenerateNounce()
+	redirectURL := fmt.Sprintf("%s/auth", serverURL)
+	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, nounce, chatbot)
+	http.Redirect(w, r, targetURL, http.StatusSeeOther)
+}
+
+func gotoauthOpenIDpage(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		log.Printf("ParseForm() err: %v\n", err)
 		return
@@ -57,11 +74,16 @@ func auth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//Decode token.IDToken to payload
-	payload, err := token.DecodePayload(channelID)
-	if err != nil {
-		log.Println("DecodeIDToken err:", err)
-		return
+	var payload *social.Payload
+	if len(token.IDToken) == 0 {
+		// User don't request openID
+	} else {
+		//Decode token.IDToken to payload
+		payload, err = token.DecodePayload(channelID)
+		if err != nil {
+			log.Println("DecodeIDToken err:", err)
+			return
+		}
 	}
 
 	//verify access token
