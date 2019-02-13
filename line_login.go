@@ -76,7 +76,16 @@ func auth(w http.ResponseWriter, r *http.Request) {
 
 	var payload *social.Payload
 	if len(token.IDToken) == 0 {
-		// User don't request openID
+		// User don't request openID, use access token to get usere profile
+		res, err := socialClient.GetUserProfile(token.AccessToken).Do()
+		if err != nil {
+			log.Println("GetUserProfile err:", err)
+			return
+		}
+		payload = &social.Payload{
+			Name:    res.DisplayName,
+			Picture: res.PictureURL,
+		}
 	} else {
 		//Decode token.IDToken to payload
 		payload, err = token.DecodePayload(channelID)
