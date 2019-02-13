@@ -41,6 +41,7 @@ func main() {
 
 	//For LINE login
 	http.HandleFunc("/", browse)
+	http.HandleFunc("/gotoauthOpenIDpage", gotoauthOpenIDpage)
 	http.HandleFunc("/gotoauthpage", gotoauthpage)
 	http.HandleFunc("/auth", auth)
 
