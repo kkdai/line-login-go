@@ -74,6 +74,13 @@ func auth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//Start to verify token and renew it.
+	if result, err := socialClient.TokenVerify(token.AccessToken).Do(); err != nil {
+		log.Println("TokenVerify err:", err, result)
+		return
+
+	}
+
 	var payload *social.Payload
 	if len(token.IDToken) == 0 {
 		// User don't request openID, use access token to get usere profile
