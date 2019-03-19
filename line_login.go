@@ -74,7 +74,7 @@ func auth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println("token:", token.AccessToken)
+	log.Println("access_token:", token.AccessToken, " refresh_token:", token.RefreshToken)
 
 	//Start to verify token and renew it.
 	if result, err := socialClient.TokenVerify(token.AccessToken).Do(); err != nil {
