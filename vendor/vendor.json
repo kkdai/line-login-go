@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "gvIJD7pQ3TsHYvCJgHjmLRWhTJA=",
+			"checksumSHA1": "ShOC5ldM8dkmc8ibYqKvqa6xLQ4=",
 			"path": "github.com/kkdai/line-social-sdk-go",
-			"revision": "96be9de87381562df307a60a703e6f80de8aa19c",
-			"revisionTime": "2019-03-17T19:09:12Z"
+			"revision": "628ace0ccfe81072003f337e9544544c27dfab30",
+			"revisionTime": "2019-03-20T02:15:01Z"
 		},
 		{
 			"checksumSHA1": "+AFpii7IfZSiqfUIddwXuniOuoo=",
