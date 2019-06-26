@@ -33,7 +33,7 @@ func gotoauthpage(w http.ResponseWriter, r *http.Request) {
 	state = GenerateNounce()
 	nounce = GenerateNounce()
 	redirectURL := fmt.Sprintf("%s/auth", serverURL)
-	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, nounce, chatbot)
+	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, social.AuthRequestOptions{Nounce: nounce, BotPrompt: chatbot, Prompt: "consent"})
 	http.Redirect(w, r, targetURL, http.StatusSeeOther)
 }
 
@@ -48,7 +48,7 @@ func gotoauthOpenIDpage(w http.ResponseWriter, r *http.Request) {
 	state = GenerateNounce()
 	nounce = GenerateNounce()
 	redirectURL := fmt.Sprintf("%s/auth", serverURL)
-	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, nounce, chatbot)
+	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, social.AuthRequestOptions{Nounce: nounce, BotPrompt: chatbot, Prompt: "consent"})
 	http.Redirect(w, r, targetURL, http.StatusSeeOther)
 }
 
