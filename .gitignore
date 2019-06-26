@@ -1,2 +1,3 @@
 /line-login-go
 .DS_Store
+vendor/github.com/kkdai/line-social-sdk-go/secret.txt
