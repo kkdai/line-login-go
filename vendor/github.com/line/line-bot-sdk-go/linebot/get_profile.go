@@ -44,13 +44,11 @@ func (call *GetProfileCall) WithContext(ctx context.Context) *GetProfileCall {
 // Do method
 func (call *GetProfileCall) Do() (*UserProfileResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetProfile, call.userID)
-	res, err := call.c.get(call.ctx, endpoint, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToUserProfileResponse(res)
 }
 
@@ -81,13 +79,11 @@ func (call *GetGroupMemberProfileCall) WithContext(ctx context.Context) *GetGrou
 // Do method
 func (call *GetGroupMemberProfileCall) Do() (*UserProfileResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetGroupMemberProfile, call.groupID, call.userID)
-	res, err := call.c.get(call.ctx, endpoint, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToUserProfileResponse(res)
 }
 
@@ -118,12 +114,10 @@ func (call *GetRoomMemberProfileCall) WithContext(ctx context.Context) *GetRoomM
 // Do method
 func (call *GetRoomMemberProfileCall) Do() (*UserProfileResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetRoomMemberProfile, call.roomID, call.userID)
-	res, err := call.c.get(call.ctx, endpoint, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToUserProfileResponse(res)
 }
