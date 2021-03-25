@@ -20,6 +20,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 // BasicResponse type
@@ -93,6 +94,17 @@ type MessageConsumptionResponse struct {
 	TotalUsage int64
 }
 
+// BotInfoResponse type
+type BotInfoResponse struct {
+	UserID         string         `json:"userId"`
+	BasicID        string         `json:"basicId"`
+	PremiumID      string         `json:"premiumId"`
+	DisplayName    string         `json:"displayName"`
+	PictureURL     string         `json:"pictureUrl"`
+	ChatMode       ChatMode       `json:"chatMode"`
+	MarkAsReadMode MarkAsReadMode `json:"markAsReadMode"`
+}
+
 // MessagesNumberDeliveryResponse type
 type MessagesNumberDeliveryResponse struct {
 	Status          string `json:"status"`
@@ -124,6 +136,8 @@ type MessagesProgressResponse struct {
 	TargetCount       int64  `json:"targetCount"`
 	FailedDescription string `json:"failedDescription"`
 	ErrorCode         int    `json:"errorCode"`
+	AcceptedTime      string `json:"acceptedTime"`
+	CompletedTime     string `json:"completedTime,omitempty"`
 }
 
 // MessagesFriendDemographicsResponse type
@@ -239,6 +253,12 @@ type LinkTokenResponse struct {
 	LinkToken string `json:"linkToken"`
 }
 
+// WebhookInfoResponse type
+type WebhookInfoResponse struct {
+	Endpoint string `json:"endpoint"`
+	Active   string `json:"active"`
+}
+
 // isSuccess checks if status code is 2xx: The action was successfully received,
 // understood, and accepted.
 func isSuccess(code int) bool {
@@ -250,11 +270,21 @@ type AccessTokenResponse struct {
 	AccessToken string `json:"access_token"`
 	ExpiresIn   int64  `json:"expires_in"`
 	TokenType   string `json:"token_type"`
+	KeyID       string `json:"key_id"`
 }
 
 // AccessTokensResponse type
 type AccessTokensResponse struct {
-	AccessTokens []string `json:"access_tokens"`
+	KeyIDs []string `json:"kids"`
+}
+
+// TestWebhookResponse type
+type TestWebhookResponse struct {
+	Success    bool      `json:"success"`
+	Timestamp  time.Time `json:"timestamp"`
+	StatusCode int       `json:"statusCode"`
+	Reason     string    `json:"reason"`
+	Detail     string    `json:"detail"`
 }
 
 func checkResponse(res *http.Response) error {
@@ -379,6 +409,18 @@ func decodeToMessageConsumptionResponse(res *http.Response) (*MessageConsumption
 	return result, nil
 }
 
+func decodeToBotInfoResponse(res *http.Response) (*BotInfoResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := &BotInfoResponse{}
+	if err := decoder.Decode(result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 func decodeToRichMenuResponse(res *http.Response) (*RichMenuResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -447,6 +489,18 @@ func decodeToLinkTokenResponse(res *http.Response) (*LinkTokenResponse, error) {
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := LinkTokenResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToWebhookInfoResponse(res *http.Response) (*WebhookInfoResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := WebhookInfoResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}
@@ -543,6 +597,18 @@ func decodeToAccessTokensResponse(res *http.Response) (*AccessTokensResponse, er
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := AccessTokensResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToTestWebhookResponsee(res *http.Response) (*TestWebhookResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := TestWebhookResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}

@@ -10,7 +10,7 @@ import (
 	social "github.com/kkdai/line-social-sdk-go"
 )
 
-var nounce string
+var nonce string
 var state string
 
 const lineLoginURL string = "https://access.line.me/oauth2/v2.1/authorize?response_type=code"
@@ -30,10 +30,10 @@ func gotoauthpage(w http.ResponseWriter, r *http.Request) {
 	chatbot := r.FormValue("chatbot")
 
 	scope := "profile" //profile | openid | email
-	state = GenerateNounce()
-	nounce = GenerateNounce()
+	state = social.GenerateNonce()
+	nonce = social.GenerateNonce()
 	redirectURL := fmt.Sprintf("%s/auth", serverURL)
-	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, social.AuthRequestOptions{Nounce: nounce, BotPrompt: chatbot, Prompt: "consent"})
+	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, social.AuthRequestOptions{Nonce: nonce, BotPrompt: chatbot, Prompt: "consent"})
 	http.Redirect(w, r, targetURL, http.StatusSeeOther)
 }
 
@@ -45,10 +45,10 @@ func gotoauthOpenIDpage(w http.ResponseWriter, r *http.Request) {
 	chatbot := r.FormValue("chatbot")
 
 	scope := "profile openid" //profile | openid | email
-	state = GenerateNounce()
-	nounce = GenerateNounce()
+	state = social.GenerateNonce()
+	nonce = social.GenerateNonce()
 	redirectURL := fmt.Sprintf("%s/auth", serverURL)
-	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, social.AuthRequestOptions{Nounce: nounce, BotPrompt: chatbot, Prompt: "consent"})
+	targetURL := socialClient.GetWebLoinURL(redirectURL, state, scope, social.AuthRequestOptions{Nonce: nonce, BotPrompt: chatbot, Prompt: "consent"})
 	http.Redirect(w, r, targetURL, http.StatusSeeOther)
 }
 

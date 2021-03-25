@@ -42,6 +42,7 @@ const (
 	FlexComponentTypeImage     FlexComponentType = "image"
 	FlexComponentTypeSeparator FlexComponentType = "separator"
 	FlexComponentTypeSpacer    FlexComponentType = "spacer"
+	FlexComponentTypeSpan      FlexComponentType = "span"
 	FlexComponentTypeText      FlexComponentType = "text"
 )
 
@@ -384,6 +385,7 @@ type BoxComponent struct {
 	CornerRadius    FlexComponentCornerRadiusType
 	BackgroundColor string
 	BorderColor     string
+	Action          TemplateAction
 }
 
 // MarshalJSON method of BoxComponent
@@ -400,6 +402,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		CornerRadius    FlexComponentCornerRadiusType `json:"cornerRadius,omitempty"`
 		BackgroundColor string                        `json:"backgroundColor,omitempty"`
 		BorderColor     string                        `json:"borderColor,omitempty"`
+		Action          TemplateAction                `json:"action,omitempty"`
 	}{
 		Type:            FlexComponentTypeBox,
 		Layout:          c.Layout,
@@ -412,6 +415,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		CornerRadius:    c.CornerRadius,
 		BackgroundColor: c.BackgroundColor,
 		BorderColor:     c.BorderColor,
+		Action:          c.Action,
 	})
 }
 
@@ -574,10 +578,43 @@ func (c *SpacerComponent) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// SpanComponent type
+type SpanComponent struct {
+	Type       FlexComponentType
+	Text       string
+	Size       FlexTextSizeType
+	Weight     FlexTextWeightType
+	Color      string
+	Style      FlexTextStyleType
+	Decoration FlexTextDecorationType
+}
+
+// MarshalJSON method of SpanComponent
+func (c *SpanComponent) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type       FlexComponentType      `json:"type"`
+		Text       string                 `json:"text,omitempty"`
+		Size       FlexTextSizeType       `json:"size,omitempty"`
+		Weight     FlexTextWeightType     `json:"weight,omitempty"`
+		Color      string                 `json:"color,omitempty"`
+		Style      FlexTextStyleType      `json:"style,omitempty"`
+		Decoration FlexTextDecorationType `json:"decoration,omitempty"`
+	}{
+		Type:       FlexComponentTypeSpan,
+		Text:       c.Text,
+		Size:       c.Size,
+		Weight:     c.Weight,
+		Color:      c.Color,
+		Style:      c.Style,
+		Decoration: c.Decoration,
+	})
+}
+
 // TextComponent type
 type TextComponent struct {
 	Type       FlexComponentType
 	Text       string
+	Contents   []*SpanComponent
 	Flex       *int
 	Margin     FlexComponentMarginType
 	Size       FlexTextSizeType
@@ -589,13 +626,15 @@ type TextComponent struct {
 	Action     TemplateAction
 	Style      FlexTextStyleType
 	Decoration FlexTextDecorationType
+	MaxLines   *int
 }
 
 // MarshalJSON method of TextComponent
 func (c *TextComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type       FlexComponentType        `json:"type"`
-		Text       string                   `json:"text"`
+		Text       string                   `json:"text,omitempty"`
+		Contents   []*SpanComponent         `json:"contents,omitempty"`
 		Flex       *int                     `json:"flex,omitempty"`
 		Margin     FlexComponentMarginType  `json:"margin,omitempty"`
 		Size       FlexTextSizeType         `json:"size,omitempty"`
@@ -607,9 +646,11 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 		Action     TemplateAction           `json:"action,omitempty"`
 		Style      FlexTextStyleType        `json:"style,omitempty"`
 		Decoration FlexTextDecorationType   `json:"decoration,omitempty"`
+		MaxLines   *int                     `json:"maxLines,omitempty"`
 	}{
 		Type:       FlexComponentTypeText,
 		Text:       c.Text,
+		Contents:   c.Contents,
 		Flex:       c.Flex,
 		Margin:     c.Margin,
 		Size:       c.Size,
@@ -621,6 +662,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 		Action:     c.Action,
 		Style:      c.Style,
 		Decoration: c.Decoration,
+		MaxLines:   c.MaxLines,
 	})
 }
 
@@ -644,6 +686,9 @@ func (*SeparatorComponent) FlexComponent() {}
 
 // FlexComponent implements FlexComponent interface
 func (*SpacerComponent) FlexComponent() {}
+
+// FlexComponent implements FlexComponent interface
+func (*SpanComponent) FlexComponent() {}
 
 // FlexComponent implements FlexComponent interface
 func (*TextComponent) FlexComponent() {}
