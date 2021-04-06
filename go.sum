@@ -1,4 +1,6 @@
 github.com/kkdai/line-social-sdk-go v0.3.0 h1:SiI86AutthZt1IrOqnlKPpWarKhWCFgkSSECR0zsTcQ=
 github.com/kkdai/line-social-sdk-go v0.3.0/go.mod h1:130L62kZlDUqETn9zUNVWWrAWY4IDeXnWI0hVup+AtY=
+github.com/kkdai/line-social-sdk-go v0.3.1 h1:0asABqnN9zoqA8zN33gC69zrrP+n+4QE9OhJfbpK8Ig=
+github.com/kkdai/line-social-sdk-go v0.3.1/go.mod h1:130L62kZlDUqETn9zUNVWWrAWY4IDeXnWI0hVup+AtY=
 github.com/line/line-bot-sdk-go v7.8.0+incompatible h1:Uf9/OxV0zCVfqyvwZPH8CrdiHXXmMRa/L91G3btQblQ=
 github.com/line/line-bot-sdk-go v7.8.0+incompatible/go.mod h1:0RjLjJEAU/3GIcHkC3av6O4jInAbt25nnZVmOFUgDBg=
