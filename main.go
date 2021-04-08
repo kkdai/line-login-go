@@ -7,7 +7,7 @@ import (
 	"os"
 
 	social "github.com/kkdai/line-social-sdk-go"
-	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
 var bot *linebot.Client

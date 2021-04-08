@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
