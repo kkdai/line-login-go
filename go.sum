@@ -1,6 +1,6 @@
 github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
-github.com/kkdai/line-social-sdk-go v0.3.1 h1:0asABqnN9zoqA8zN33gC69zrrP+n+4QE9OhJfbpK8Ig=
-github.com/kkdai/line-social-sdk-go v0.3.1/go.mod h1:130L62kZlDUqETn9zUNVWWrAWY4IDeXnWI0hVup+AtY=
+github.com/kkdai/line-social-sdk-go v0.4.0 h1:avjDYr5YzahqZWLYqaV4fkWh3eySmgBDv7QI5eOeKzY=
+github.com/kkdai/line-social-sdk-go v0.4.0/go.mod h1:130L62kZlDUqETn9zUNVWWrAWY4IDeXnWI0hVup+AtY=
 github.com/line/line-bot-sdk-go/v7 v7.9.1 h1:WQJobm9aGUkFI03PB9zNLroMxznTA3yWld4YMFUFtGw=
 github.com/line/line-bot-sdk-go/v7 v7.9.1/go.mod h1:WNSLxxBiXoGZtSfoiDKGTXu6pJJh8RGzj4AeNvSCWEs=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
