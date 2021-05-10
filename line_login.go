@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	social "github.com/kkdai/line-social-sdk-go"
+	social "github.com/kkdai/line-login-sdk-go"
 )
 
 var nonce string
