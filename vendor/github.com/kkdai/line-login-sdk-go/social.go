@@ -353,13 +353,23 @@ func (call *GetFriendshipStatusCall) Do() (*GetFriendshipStatusResponse, error) 
 	return decodeToGetFriendshipStatusResponse(res)
 }
 
-// GetAccessTokenPKCECall type
+// GetAccessTokenPKCECall: Issues access token by PKCE.
+func (client *Client) GetAccessTokenPKCE(redirectURL, code, codeVerifier string) *GetAccessTokenPKCECall {
+	return &GetAccessTokenPKCECall{
+		c:            client,
+		redirectURL:  redirectURL,
+		code:         code,
+		codeVerifier: codeVerifier,
+	}
+}
+
 type GetAccessTokenPKCECall struct {
 	c   *Client
 	ctx context.Context
 
-	redirectURL string
-	code        string
+	codeVerifier string
+	redirectURL  string
+	code         string
 }
 
 // WithContext method
@@ -378,6 +388,7 @@ func (call *GetAccessTokenPKCECall) Do() (*TokenResponse, error) {
 	data.Set("redirect_uri", call.redirectURL)
 	data.Set("client_id", call.c.channelID)
 	data.Set("client_secret", call.c.channelSecret)
+	data.Set("code_verifier", call.codeVerifier)
 
 	res, err := call.c.post(call.ctx, APIEndpointToken, strings.NewReader(data.Encode()))
 	if res != nil && res.Body != nil {
