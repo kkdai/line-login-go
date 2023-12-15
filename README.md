@@ -23,6 +23,23 @@ Before deploy this to your Heroku, you will need complete as follows:
 - Crete a LINE Message API channel. Remember it's channel secret and token.
 - Link the chatbot to the LINE login channel
 
+Run In Docker
+=============
+
+```
+docker build -t line-login-go:latest .
+
+docker run \
+-e LINECORP_PLATFORM_CHATBOT_CHANNELSECRET=your_secret \
+-e LINECORP_PLATFORM_CHATBOT_CHANNELTOKEN=your_token \
+-e LINECORP_PLATFORM_SERVERURL=http://localhost:8080 \
+-e LINECORP_PLATFORM_CHANNEL_CHANNELID=your_channel_id \
+-e LINECORP_PLATFORM_CHANNEL_CHANNELSECRET=your_channel_secret \
+-e PORT=8080 \
+-p 8080:8080 \
+line-login-go
+```
+
 License
 =============
 
