@@ -1,6 +1,0 @@
-# github.com/kkdai/line-login-sdk-go v0.6.1
-## explicit
-github.com/kkdai/line-login-sdk-go
-# github.com/line/line-bot-sdk-go/v7 v7.9.1
-## explicit
-github.com/line/line-bot-sdk-go/v7/linebot
