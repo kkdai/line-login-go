@@ -40,6 +40,37 @@ The script builds from the `Dockerfile` with Cloud Build, deploys to Cloud Run, 
 - LINE Login Callback URL: `<service URL>/auth`
 - Messaging API Webhook URL: `<service URL>/callback`
 
+### Deploy manually with gcloud
+
+The script above wraps these commands:
+
+```
+gcloud config set project $PROJECT_ID
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com
+
+# 1. Build from the Dockerfile with Cloud Build and deploy
+gcloud run deploy line-login-go \
+  --source . \
+  --region asia-east1 \
+  --allow-unauthenticated \
+  --set-env-vars LINECORP_PLATFORM_CHANNEL_CHANNELID=your_channel_id,LINECORP_PLATFORM_CHANNEL_CHANNELSECRET=your_channel_secret,LINECORP_PLATFORM_CHATBOT_CHANNELSECRET=your_bot_secret,LINECORP_PLATFORM_CHATBOT_CHANNELTOKEN=your_bot_token,LINECORP_PLATFORM_SERVERURL=https://placeholder.invalid
+
+# 2. Get the service URL and set it as SERVERURL (used to build the /auth redirect URI)
+URL=$(gcloud run services describe line-login-go --region asia-east1 --format 'value(status.url)')
+gcloud run services update line-login-go --region asia-east1 \
+  --update-env-vars LINECORP_PLATFORM_SERVERURL=$URL
+```
+
+Note: `status.url` may differ from the other URL form shown in the deploy output (`https://<service>-<project-number>.<region>.run.app`). Use the same URL in `LINECORP_PLATFORM_SERVERURL` and in the LINE console, otherwise the redirect URI will not match.
+
+To update a single variable later:
+
+```
+gcloud run services update line-login-go --region asia-east1 --update-env-vars KEY=VALUE
+```
+
+To view logs: `gcloud run services logs read line-login-go --region asia-east1`
+
 For production, consider storing secrets in Secret Manager and using `--set-secrets` instead of `--set-env-vars`.
 
 Run In Docker
