@@ -48,8 +48,11 @@ func main() {
 	//For linked chatbot
 	http.HandleFunc("/callback", callbackHandler)
 
-	//provide by Heroku
+	//PORT is provided by Cloud Run / Heroku
 	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 	addr := fmt.Sprintf(":%s", port)
-	http.ListenAndServe(addr, nil)
+	log.Fatal(http.ListenAndServe(addr, nil))
 }

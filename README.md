@@ -23,6 +23,25 @@ Before deploy this to your Heroku, you will need complete as follows:
 - Crete a LINE Message API channel. Remember it's channel secret and token.
 - Link the chatbot to the LINE login channel
 
+Deploy on Google Cloud Run
+=============
+
+Prerequisites: the same LINE channels as above, plus `gcloud` installed and logged in (`gcloud auth login`).
+
+```
+export PROJECT_ID=your-gcp-project
+export LINE_LOGIN_CHANNEL_ID=... LINE_LOGIN_CHANNEL_SECRET=...
+export LINE_BOT_CHANNEL_SECRET=... LINE_BOT_CHANNEL_TOKEN=...
+./deploy-cloudrun.sh   # optional: REGION (default asia-east1), SERVICE (default line-login-go)
+```
+
+The script builds from the `Dockerfile` with Cloud Build, deploys to Cloud Run, and sets `LINECORP_PLATFORM_SERVERURL` to the service URL. Afterwards, set these in the LINE Developers Console:
+
+- LINE Login Callback URL: `<service URL>/auth`
+- Messaging API Webhook URL: `<service URL>/callback`
+
+For production, consider storing secrets in Secret Manager and using `--set-secrets` instead of `--set-env-vars`.
+
 Run In Docker
 =============
 
