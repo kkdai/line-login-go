@@ -1,4 +1,4 @@
-github.com/kkdai/line-login-sdk-go v0.6.1 h1:YL4iPisaz6iI16BPhNNeW/MdIfLPDVa9JPmT9lDom8U=
-github.com/kkdai/line-login-sdk-go v0.6.1/go.mod h1:0D2lfcUZ5YHDdPraslN8RL3Gb3sZHbJlDbmWCL74xFU=
+github.com/kkdai/line-login-sdk-go v0.9.0 h1:ZrI+xW9zaMnuuY0ijEysOkgco95DsQcLotfOfgZl1xo=
+github.com/kkdai/line-login-sdk-go v0.9.0/go.mod h1:+L2h+NYoNeQjKRh8uzM7Hmtk4KLqk44+TYdL2Oco25k=
 github.com/line/line-bot-sdk-go/v7 v7.21.0 h1:eeYMuAwaDV5DZNTRqDipNhzjT51HwEcM1PRPG+cqh4Y=
 github.com/line/line-bot-sdk-go/v7 v7.21.0/go.mod h1:idpoxOZgtSd8JyhctMMpwg5LNgRAIL/QIxa5S0DXcMg=

@@ -1,5 +1,5 @@
 
-FROM golang:1.21-alpine3.19
+FROM golang:1.23-alpine
 
 ADD . /line-login-go
 WORKDIR /line-login-go
